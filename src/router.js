@@ -1,19 +1,16 @@
-const express = require('express');
-const { readFileSync } = require('fs');
-const app = express();
-const port = 3000;
+const { Router } = require('express');
+const router = Router();
 
-app
+router
   .route('/books')
   .get((req, res) => {
-    readFileSync('loadtesting.txt');
     res.sendStatus(200);
   })
   .post((req, res) => {
     res.sendStatus(200);
   })
 
-app
+router
   .route('/orders')
   .get((req, res) => {
     res.sendStatus(200);
@@ -22,4 +19,4 @@ app
     res.sendStatus(200);
   })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+module.exports = router;
