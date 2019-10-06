@@ -1,0 +1,5 @@
+curl -G http://localhost:3000/books | python -m json.tool
+curl --data "title=NodeJS Patterns" --data "price=150" http://localhost:3000/books
+
+curl -G http://localhost:3000/orders | python -m json.tool
+curl --data "bookId=fcf61163c94f879488acf8d42452cf30" --data "count=3" http://localhost:3000/orders
