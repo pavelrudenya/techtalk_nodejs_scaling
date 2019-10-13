@@ -1,0 +1,13 @@
+slc start // Start the service
+slc ctl ls // List services
+slc ctl cluster-restart  SVC // Zero-downtime restart
+slc ctl log-dump SVC // Empty the log buffer
+slc ctl restart SVC // Hard restart
+slc ctl set-size SVC num // Set cluster size
+slc ctl status SVC // Report status for service SVC
+slc ctl stop SVC // Hard stop
+slc ctl soft-stop SVC // Soft stop
+slc ctl soft-restart SVC // Soft restart
+
+npm run loadtest -- -c 100 -m GET http://localhost:3000/orders/total
+npm run loadtest -- -n 5000 -c 500 -d 5000 -m GET http://localhost:3000/orders/

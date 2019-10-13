@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const crypto = require("crypto");
+const calculateFibo = require('./utils/calculateFibo');
 
 // NOTE: utils
 const newId = () => {
@@ -85,35 +86,52 @@ const createBook = (book) => {
   })
 }
 
+const getOrdersTotal = () => {
+  return new Promise((resolve, reject) => {
+    // NOTE: CPU intensive task
+    const fibo = calculateFibo(30);
+
+    resolve(fibo);
+  })
+}
+
 // NOTE: REST API
 router
   .route('/books')
-  .get((req, res) => {
+  .get((req, res, next) => {
     getBooks()
       .then(books => res.status(200).send(books))
-      .catch(() => res.sendStatus(500));
+      .catch(next);
   })
-  .post((req, res) => {
+  .post((req, res, next) => {
     const book = req.body;
 
     createBook(book)
       .then(() => res.sendStatus(200))
-      .catch(() => res.sendStatus(400));
+      .catch(next);
   })
 
 router
   .route('/orders')
-  .get((req, res) => {
+  .get((req, res, next) => {
     getOrders()
       .then(orders => res.status(200).send(orders))
-      .catch(() => res.sendStatus(500));
+      .catch(next);
   })
-  .post((req, res) => {
+  .post((req, res, next) => {
     const order = req.body;
 
     createOrder(order)
       .then(() => res.sendStatus(200))
-      .catch(() => res.sendStatus(400));
+      .catch(next);
+  })
+
+router
+  .route('/orders/total')
+  .get((req, res, next) => {
+    getOrdersTotal()
+      .then(total => res.status(200).send(total))
+      .catch(next);
   })
 
 module.exports = router;
