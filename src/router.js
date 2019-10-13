@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const crypto = require("crypto");
-const calculateFibo = require('./utils/calculateFibo');
+const calculateFibo = require('./utils/fiboWorker');
 
 // NOTE: utils
 const newId = () => {
@@ -89,9 +89,7 @@ const createBook = (book) => {
 const getOrdersTotal = () => {
   return new Promise((resolve, reject) => {
     // NOTE: CPU intensive task
-    const fibo = calculateFibo(30);
-
-    resolve(fibo);
+    calculateFibo(30).then(resolve, reject);
   })
 }
 
@@ -130,7 +128,7 @@ router
   .route('/orders/total')
   .get((req, res, next) => {
     getOrdersTotal()
-      .then(total => res.status(200).send(total))
+      .then(total => res.status(200).send())
       .catch(next);
   })
 
